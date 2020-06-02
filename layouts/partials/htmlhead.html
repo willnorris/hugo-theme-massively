@@ -14,12 +14,12 @@
 		{{ $style := resources.Get "css/main.scss" | toCSS (dict "enableSourceMap" true) }}
 		<link rel="stylesheet" href="{{ ($style).RelPermalink }}">
 		{{ else }}
-		{{ $style := resources.Get "css/main.scss" | toCSS }}
-		<link rel="stylesheet" href="{{ ($style | minify).RelPermalink }}">
+		{{ $style := resources.Get "css/main.scss" | toCSS (dict "outputStyle" "compressed") | fingerprint }}
+		<link rel="stylesheet" href="{{ ($style).RelPermalink }}">
 		{{ end }}
 		{{ with .Site.Params.favicon }}
 		<link rel="shortcut icon" href="{{ . }}">
 		{{ end }}
-		{{ $noscript := resources.Get "css/noscript.scss" | toCSS }}
-		<noscript><link rel="stylesheet" href='{{ $noscript.RelPermalink }}' /></noscript>
+		{{ $noscript := resources.Get "css/noscript.scss" | toCSS (dict "outputStyle" "compressed") | fingerprint }}
+		<noscript><link rel="stylesheet" href="{{ $noscript.RelPermalink }}" /></noscript>
 	</head>
