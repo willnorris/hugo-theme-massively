@@ -10,12 +10,14 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- CSS -->
-		{{ if .Site.IsServer }}
-		{{ $style := resources.Get "css/main.scss" | toCSS (dict "enableSourceMap" true) }}
+		{{ range $css := (slice "css/main.scss" | append .Site.Params.custom_css) }}
+		{{ if $.Site.IsServer }}
+		{{ $style := resources.Get $css | toCSS (dict "enableSourceMap" true) }}
 		<link rel="stylesheet" href="{{ ($style).RelPermalink }}">
 		{{ else }}
-		{{ $style := resources.Get "css/main.scss" | toCSS (dict "outputStyle" "compressed") | fingerprint }}
+		{{ $style := resources.Get $css | toCSS (dict "outputStyle" "compressed") | fingerprint }}
 		<link rel="stylesheet" href="{{ ($style).RelPermalink }}">
+		{{ end }}
 		{{ end }}
 		{{ with .Site.Params.favicon }}
 		<link rel="shortcut icon" href="{{ . }}">
