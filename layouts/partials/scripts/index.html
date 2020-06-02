@@ -6,7 +6,7 @@
 {{ $util := resources.Get "js/util.js" }}
 {{ $main := resources.Get "js/main.js" }}
 
-{{ $js := slice $jQuery $scrollex $scrolly $browser $breakpoints $util $main | resources.Concat "assets/js/bundle.js" }}
+{{ $js := slice $jQuery $scrollex $scrolly $browser $breakpoints $util $main | resources.Concat "js/bundle.js" }}
 
 <!-- Scripts -->
 <script src='{{ $js.RelPermalink }}'></script>
